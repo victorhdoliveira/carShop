@@ -16,15 +16,7 @@ class CarController {
   }
 
   public async create() {
-    const carData: ICar = {
-      model: this.req.body.model,
-      year: this.req.body.year,
-      color: this.req.body.color,
-      status: this.req.body.status || false,
-      buyValue: this.req.body.buyValue,
-      doorsQty: this.req.body.doorsQty,
-      seatsQty: this.req.body.seatsQty,
-    };
+    const carData: ICar = this.req.body;
     try {
       const newCar = await this.service.registerCar(carData);
       return this.res.status(201).json(newCar);
