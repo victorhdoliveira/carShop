@@ -1,4 +1,4 @@
-import { isValidObjectId, Model, model, models, Schema } from 'mongoose';
+import { isValidObjectId, Model, model, models, Schema, UpdateQuery } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 
 class CarODM {
@@ -32,6 +32,18 @@ class CarODM {
       throw new Error('Invalid mongo id');
     }
     return this.model.findById(id);
+  }
+
+  public async updateCarById(id: string, data: Partial<ICar>):Promise<ICar | null> {
+    if (!isValidObjectId(id)) {
+      throw new Error('Invalid mongo id');
+    }
+    return this.model.findByIdAndUpdate(
+      { _id: id },
+      { ...data } as UpdateQuery<ICar>,
+      { new: true },
+
+    );
   }
 }
 
