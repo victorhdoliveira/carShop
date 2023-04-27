@@ -18,10 +18,6 @@ class CarODM extends AbstractODM<ICar> {
     super(schema, 'Car');
   }
 
-  // public async create(car: ICar): Promise<ICar> {
-  //   return this.model.create({ ...car });
-  // }
-
   public async getAllCars(): Promise<ICar[]> {
     return this.model.find();
   }
