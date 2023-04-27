@@ -46,6 +46,23 @@ class MotorcycleController {
       this.next(error);
     }
   }
+
+  public async updateMotorcycleById() {
+    const { id } = this.req.params;
+    const motorcycleData: IMotorcycle = {
+      ...this.req.body,
+    };
+    
+    try {
+      const motorcycleById = await this.service.updateMotorcycleById(id, motorcycleData);
+      if (motorcycleById === null) {
+        return this.res.status(404).json({ message: 'Motorcycle not found' });
+      }
+      return this.res.status(200).json(motorcycleById);
+    } catch (error) {
+      this.next(error);
+    }
+  }
 }
 
 export default MotorcycleController;

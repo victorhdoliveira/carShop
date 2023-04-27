@@ -1,4 +1,4 @@
-import { isValidObjectId, Schema } from 'mongoose';
+import { isValidObjectId, Schema, UpdateQuery } from 'mongoose';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import AbstractODM from './AbstractODM';
 
@@ -27,6 +27,19 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
       throw new Error('Invalid mongo id');
     }
     return this.model.findById(id);
+  }
+
+  public async updateMotorcycleById(id: string, data: Partial<IMotorcycle>):
+  Promise<IMotorcycle | null> {
+    if (!isValidObjectId(id)) {
+      throw new Error('Invalid mongo id');
+    }
+    return this.model.findByIdAndUpdate(
+      { _id: id },
+      { ...data } as UpdateQuery<IMotorcycle>,
+      { new: true },
+
+    );
   }
 }
 

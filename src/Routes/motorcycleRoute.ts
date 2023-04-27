@@ -8,5 +8,7 @@ routes.get('/motorcycles', (req, res, next) => new MotorcycleController(req, res
   .getAllMotorcycle());
 routes.get('/motorcycles/:id', (req, res, next) => new MotorcycleController(req, res, next)
   .getMotorcycleById());
+routes.put('/motorcycles/:id', (req, res, next) => new MotorcycleController(req, res, next)
+  .updateMotorcycleById());
 
 export default routes;
