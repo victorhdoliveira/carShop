@@ -15,6 +15,8 @@ class MotorcycleController {
     this.service = new MotorcycleService();
   }
 
+  notFound = 'Motorcycle not found';
+
   public async create() {
     const motorcycleData: IMotorcycle = this.req.body;
     try {
@@ -39,7 +41,7 @@ class MotorcycleController {
     try {
       const motorcycleById = await this.service.getMotorcycleById(id);
       if (motorcycleById === null) {
-        return this.res.status(404).json({ message: 'Motorcycle not found' });
+        return this.res.status(404).json({ message: this.notFound });
       }
       return this.res.status(200).json(motorcycleById);
     } catch (error) {
@@ -56,9 +58,22 @@ class MotorcycleController {
     try {
       const motorcycleById = await this.service.updateMotorcycleById(id, motorcycleData);
       if (motorcycleById === null) {
-        return this.res.status(404).json({ message: 'Motorcycle not found' });
+        return this.res.status(404).json({ message: this.notFound });
       }
       return this.res.status(200).json(motorcycleById);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async removeMotorcycleById() {
+    const { id } = this.req.params;
+    try {
+      const removeById = await this.service.removeMotorcycleById(id);
+      if (removeById === null) {
+        return this.res.status(404).json({ message: this.notFound });
+      }
+      return this.res.status(204).end();
     } catch (error) {
       this.next(error);
     }

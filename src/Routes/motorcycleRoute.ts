@@ -3,12 +3,20 @@ import MotorcycleController from '../Controllers/MotorcycleController';
 
 const routes = Router();
 
+const idPath = '/motorcycles/:id';
+
 routes.post('/motorcycles', (req, res, next) => new MotorcycleController(req, res, next).create());
+
 routes.get('/motorcycles', (req, res, next) => new MotorcycleController(req, res, next)
   .getAllMotorcycle());
-routes.get('/motorcycles/:id', (req, res, next) => new MotorcycleController(req, res, next)
+
+routes.get(idPath, (req, res, next) => new MotorcycleController(req, res, next)
   .getMotorcycleById());
-routes.put('/motorcycles/:id', (req, res, next) => new MotorcycleController(req, res, next)
+
+routes.put(idPath, (req, res, next) => new MotorcycleController(req, res, next)
   .updateMotorcycleById());
+
+routes.delete(idPath, (req, res, next) => new MotorcycleController(req, res, next)
+  .removeMotorcycleById());
 
 export default routes;

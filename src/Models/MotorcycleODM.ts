@@ -18,13 +18,17 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
     super(schema, 'Motorcycle');
   }
 
+  public async invalidMongoId(): Promise<string> {
+    return 'Invalid mongo id';
+  } 
+
   public async getAllMotorCycle(): Promise<IMotorcycle[]> {
     return this.model.find();
   }
 
   public async getMotorCycleById(id: string):Promise<IMotorcycle | null> {
     if (!isValidObjectId(id)) {
-      throw new Error('Invalid mongo id');
+      throw new Error(await this.invalidMongoId());
     }
     return this.model.findById(id);
   }
@@ -32,7 +36,7 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
   public async updateMotorcycleById(id: string, data: Partial<IMotorcycle>):
   Promise<IMotorcycle | null> {
     if (!isValidObjectId(id)) {
-      throw new Error('Invalid mongo id');
+      throw new Error(await this.invalidMongoId());
     }
     return this.model.findByIdAndUpdate(
       { _id: id },
@@ -40,6 +44,13 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
       { new: true },
 
     );
+  }
+
+  public async deleteMotorcycleById(id: string) {
+    if (!isValidObjectId(id)) {
+      throw new Error(await this.invalidMongoId());
+    }
+    return this.model.findByIdAndDelete(id);
   }
 }
 
