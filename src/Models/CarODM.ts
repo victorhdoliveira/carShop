@@ -24,14 +24,14 @@ class CarODM extends AbstractODM<ICar> {
 
   public async getCarById(id: string):Promise<ICar | null> {
     if (!isValidObjectId(id)) {
-      throw new Error('Invalid mongo id');
+      throw new Error(this.invalidMongoId);
     }
     return this.model.findById(id);
   }
 
   public async updateCarById(id: string, data: Partial<ICar>):Promise<ICar | null> {
     if (!isValidObjectId(id)) {
-      throw new Error('Invalid mongo id');
+      throw new Error(this.invalidMongoId);
     }
     return this.model.findByIdAndUpdate(
       { _id: id },
@@ -39,6 +39,13 @@ class CarODM extends AbstractODM<ICar> {
       { new: true },
 
     );
+  }
+
+  public async deleteCarById(id: string) {
+    if (!isValidObjectId(id)) {
+      throw new Error(this.invalidMongoId);
+    }
+    return this.model.findByIdAndDelete(id);
   }
 }
 

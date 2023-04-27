@@ -15,6 +15,8 @@ class CarController {
     this.service = new CarService();
   }
 
+  notFound = 'Car not found';
+
   public async create() {
     const carData: ICar = this.req.body;
     try {
@@ -39,7 +41,7 @@ class CarController {
     try {
       const carById = await this.service.getCarById(id);
       if (carById === null) {
-        return this.res.status(404).json({ message: 'Car not found' });
+        return this.res.status(404).json({ message: this.notFound });
       }
       return this.res.status(200).json(carById);
     } catch (error) {
@@ -56,9 +58,22 @@ class CarController {
     try {
       const carById = await this.service.updateCarById(id, carData);
       if (carById === null) {
-        return this.res.status(404).json({ message: 'Car not found' });
+        return this.res.status(404).json({ message: this.notFound });
       }
       return this.res.status(200).json(carById);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async removeCarById() {
+    const { id } = this.req.params;
+    try {
+      const removeById = await this.service.removeCarById(id);
+      if (removeById === null) {
+        return this.res.status(404).json({ message: this.notFound });
+      }
+      return this.res.status(204).end();
     } catch (error) {
       this.next(error);
     }
