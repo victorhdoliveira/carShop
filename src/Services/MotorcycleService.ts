@@ -22,6 +22,12 @@ class MotorcycleService {
     const motorcycleArray = motorcycleList.map((m) => this.createMotorcycleDomain(m));
     return motorcycleArray;
   }
+
+  public async getMotorcycleById(id: string) {
+    const motorcycleODM = new MotorcycleODM();
+    const motorcycleById = await motorcycleODM.getMotorCycleById(id);
+    return this.createMotorcycleDomain(motorcycleById);
+  }
 }
 
 export default MotorcycleService;
