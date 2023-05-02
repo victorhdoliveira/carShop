@@ -1,7 +1,8 @@
+import TypesCategory from '../utils/typesCategory';
 import IVehicle from './IVehicle';
 
 interface IMotorcycle extends IVehicle {
-  category: 'Street' | 'Custom' | 'Trail';
+  category: TypesCategory;
   engineCapacity: number;
 }
 

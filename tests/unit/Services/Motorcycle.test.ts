@@ -2,10 +2,8 @@ import * as chai from 'chai';
 import { afterEach, describe } from 'mocha';
 import { Model } from 'mongoose';
 import * as sinon from 'sinon';
-import IMotorcycle from '../../../src/Interfaces/IMotorcycle';
 import MotorcycleService from '../../../src/Services/MotorcycleService';
-import { updatedMotorcycle } from '../../../__tests__/utils/MotorcyclesMock';
-import { allMotorcyle, oneMotorcyle } from './Mocks/MotorcycleMock';
+import { allMotorcyle, bodyInput, oneMotorcyle, updatedMotorcyle } from './Mocks/MotorcycleMock';
 
 const { expect } = chai;
 
@@ -36,16 +34,6 @@ describe('Service /cars', function () {
     it('POST motorcyles/ should return an object with a motorcyle', async function () {
       sinon.stub(Model, 'create').resolves(oneMotorcyle);
 
-      const bodyInput: IMotorcycle = {
-        model: 'Honda Cb 600f Hornet',
-        year: 2005,
-        color: 'Yellow',
-        status: true,
-        buyValue: 30.000,
-        category: 'Street',
-        engineCapacity: 600,
-      };
-
       const service = new MotorcycleService();
       const result = await service.registerMotorcycle(bodyInput);
       expect(result).to.be.deep.equal(oneMotorcyle);
@@ -53,12 +41,11 @@ describe('Service /cars', function () {
     });
 
     it('PUT motorcyles/:id should update and return an object with a motorcyle', async function () {
-      sinon.stub(Model, 'findByIdAndUpdate').resolves(updatedMotorcycle);
-
+      sinon.stub(Model, 'findByIdAndUpdate').resolves(updatedMotorcyle);
       const service = new MotorcycleService();
       const result = await service
-        .updateMotorcycleById('6448542ef7475359162577f1', updatedMotorcycle);
-      expect(result).to.be.deep.equal(updatedMotorcycle);
+        .updateMotorcycleById('6448542ef7475359162577f1', updatedMotorcyle);
+      expect(result).to.be.deep.equal(updatedMotorcyle);
       expect(result).to.be.an('object');
     });
     it('DELETE motorcyles/:id should delete motorcyle according to id ', async function () {

@@ -1,3 +1,5 @@
+import TypesCategory from '../../../../src/utils/typesCategory';
+
 export const allMotorcyle = [
   {
     id: '6348513f34c397abcad040b2',
@@ -39,7 +41,17 @@ export const updatedMotorcyle = {
   color: 'Gold',
   status: true,
   buyValue: 30.000,
-  category: 'Street',
+  category: 'Street' as TypesCategory,
+  engineCapacity: 600,
+};
+
+export const bodyInput = {
+  model: 'Honda Cb 600f Hornet',
+  year: 2005,
+  color: 'Yellow',
+  status: true,
+  buyValue: 30.000,
+  category: 'Street' as TypesCategory,
   engineCapacity: 600,
 };
   
