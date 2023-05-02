@@ -37,7 +37,6 @@ class CarODM extends AbstractODM<ICar> {
       { _id: id },
       { ...data } as UpdateQuery<ICar>,
       { new: true },
-
     );
   }
 
